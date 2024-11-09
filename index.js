@@ -6,8 +6,9 @@ dotenv.config();
 
 const app = express();
 app.use(cors({
-    origin: '*',
-}));
+    origin: ['http://localhost:4000', 'https://omara-frontend.vercel.app'],
+  }));
+  
 
 const supabaseUrl = 'https://tvsismlsejyvenvykyed.supabase.co'; 
 const supabaseKey = process.env.SUPABASE_KEY;

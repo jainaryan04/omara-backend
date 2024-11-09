@@ -3,8 +3,8 @@ import cors from 'cors';
 
 const app = express();
 app.use(cors({
-    origin: '*',
-}));
+    origin: ['http://localhost:4000', 'https://omara-frontend.vercel.app'],
+  }));
 
 async function sendData(supabase) {
     try {
