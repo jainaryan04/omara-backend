@@ -12,8 +12,10 @@ const supabase = createClient(supabaseUrl, supabaseKey);
 const statuses = ['pending', 'processing', 'completed', 'cancelled'];
 
 function generateOrders(count) {
+  let currentId = 1;
+
   return Array.from({ length: count }, () => {
-    const id = uuidv4();
+    const id = currentId++;
     const customerName = faker.person.fullName();
     const orderAmount = parseFloat((Math.random() * 500).toFixed(2));
     const status = statuses[Math.floor(Math.random() * statuses.length)];
@@ -38,6 +40,7 @@ function generateOrders(count) {
     };
   });
 }
+
 
 async function seedOrders() {
   await deleteAllOrders();  
@@ -66,24 +69,16 @@ async function seedOrders() {
 }
 
 async function deleteAllOrders() {
-    const response1 = await supabase
+  const { error } = await supabase
     .from('orders')
     .delete()
-    .eq('status', 'completed')
-    const response2 = await supabase
-    .from('orders')
-    .delete()
-    .eq('status', 'processing')
-    const response3 = await supabase
-    .from('orders')
-    .delete()
-    .eq('status', 'pending')
-    const response4 = await supabase
-    .from('orders')
-    .delete()
-    .eq('status', 'cancelled')
+    .in('status', ['completed', 'processing', 'pending', 'cancelled']);
   
+  if (error) {
+    console.error('Error deleting orders:', error.message);
+  }
 }
+
 
 
 export default seedOrders;
