@@ -6,7 +6,7 @@ dotenv.config();
 
 const app = express();
 app.use(cors({
-    origin: ['http://localhost:4000', 'https://omara-frontend.vercel.app'],
+    origin: 'https://omara-frontend.vercel.app', 
   }));
   
 
